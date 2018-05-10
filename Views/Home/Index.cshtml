@@ -1,0 +1,26 @@
+﻿<head>
+    <link rel="../Content/bootstrap.css" type="stylesheet" />
+</head>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Index</h2>
+<br />
+
+@if (User.Identity.IsAuthenticated)
+{
+    @Html.ActionLink("Hello " + Context.User.Identity.Name, "EditProfile", "Home")  
+    @Html.ActionLink("Signout", "SignOut", "Account", null, new { @class = "btn btn-default" })
+
+
+}
+else
+{
+    @Html.ActionLink("Login", "LogIn", "Account", null, new { @class = "btn btn-default" })
+    <br />
+    @Html.ActionLink("No Account yet? Signup Now!", "SignUp", "Account", null, new { @class = "btn btn-default" })
+}

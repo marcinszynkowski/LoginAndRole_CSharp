@@ -1,0 +1,87 @@
+﻿@model WebApp.Models.ViewModel.UserDataView
+
+<head>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+</head>
+
+<div>
+    <h1>List of Users</h1>
+    <span class="alert-success">@ViewBag.Message</span>
+    <table class="table table-striped table-condensed table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Login ID</th>
+                <th>Password</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th colspan="2">Role</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            
+            @foreach (var i in Model.UserProfile)
+            {
+                <tr>
+                    <td> @Html.DisplayFor(m => i.SYSUserID)</td>
+                    <td> @Html.DisplayFor(m => i.LoginName)</td>
+                    <td> @Html.DisplayFor(m => i.Password)</td>
+                    <td> @Html.DisplayFor(m => i.FirstName)</td>
+                    <td> @Html.DisplayFor(m => i.LastName)</td>
+                    <td> @Html.DisplayFor(m => i.Gender)</td>
+                    <td> @Html.DisplayFor(m => i.RoleName)</td>
+                    <td> @Html.HiddenFor(m => i.LOOKUPRoleID)</td>
+                    <td> @Html.ActionLink("Edit", "EditProfile", "Home", new { userId = i.SYSUserID }, new { @class = "btn btn-default" })</td>
+                    <td>@Html.ActionLink("Delete", "DeleteUser", "Home", new { userId = i.SYSUserID }, new { @class = "btn btn-default" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div id="divEdit" style="display:none">
+        <input type="hidden" id="hidID" />
+        <table>
+            <tr>
+                <td>Login Name</td>
+                <td><input type="text" id="txtLoginName" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input type="text" id="txtPassword" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td>First Name</td>
+                <td><input type="text" id="txtFirstName" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td><input type="text" id="txtLastName" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>
+                    @Html.DropDownListFor(o => o.UserGender.SelectedGender,
+                       new SelectList(Model.UserGender.Gender, "Value", "Text"),
+                       "",
+                       new { id = "ddlGender", @class = "form-control" })
+            </td>
+        </tr>
+        <tr>
+            <td>Role</td>
+            <td>
+                @Html.DropDownListFor(o => o.UserRoles.SelectedRoleID,
+                       new SelectList(Model.UserRoles.UserRoleList, "LOOKUPRoleID", "RoleName"),
+                       "",
+                       new { id = "ddlRoles", @class = "form-control" })
+        </td>
+    </tr>
+</table>
+</div>
+
+</div>
